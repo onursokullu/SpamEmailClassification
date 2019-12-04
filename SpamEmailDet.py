@@ -30,10 +30,33 @@ yTrainToInt = yTrain.astype('int')
 #Multinomial Naive bayes implementation
 classifiermodel = MultinomialNB()
 classifiermodel.fit(xTrainFeat,yTrainToInt)
-predResult = classifiermodel.predict(xTestFeat)
+predResultNb = classifiermodel.predict(xTestFeat)
 
 #Knn implementation
 classifierModelKnn = KNeighborsClassifier()
 classifierModelKnn.fit(xTrainFeat,yTrainToInt)
 predResultKnn = classifierModelKnn.predict(xTestFeat)
 
+yTest=yTest.astype('int')
+actualY = yTest.as_matrix() 
+
+
+print("~~~~~~~~~~MNB RESULTS~~~~~~~~~~")
+#Accuracy score using MNB
+print("Accuracy Score using MNB: {0:.4f}".format(accuracy_score(actualY, predResultNb)*100))
+#FScore MACRO using MNB
+print("F Score using MNB:{0: .4f}".format(f1_score(actualY, predResultNb, average='macro')*100))
+cmMNb=confusion_matrix(actualY, predResultNb)
+#"[True negative  False Positive\nFalse Negative True Positive]"1
+print("Confusion matrix using MNB:")
+print(cmMNb)
+
+print("~~~~~~~~~~Knn RESULTS~~~~~~~~~~")
+#Accuracy score using SVM
+print("Accuracy Score using Knn: {0:.4f}".format(accuracy_score(actualY, predResultKnn)*100))
+#FScore MACRO using SVM
+print("F Score using Knn: {0: .4f}".format(f1_score(actualY, predResultKnn, average='macro')*100))
+cmSVM=confusion_matrix(actualY, predResultKnn)
+#"[True negative  False Positive\nFalse Negative True Positive]"
+print("Confusion matrix using Knn:")
+print(cmSVM)
